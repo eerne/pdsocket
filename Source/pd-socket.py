@@ -5,7 +5,8 @@ import socket, threading, time, os
 
 PDDIR = '//Applications/Pd-0.42-5.app/Contents/Resources/bin'
 # assuming we are in the same dir as pd-socket.py and pd-socket.pd
-FILEDIR = os.getcwd()
+FILEDIR = '../Resources/puredata/pd-socket/Source/' # os.getcwd()
+FILE = 'pd-socket.pd'
 PORTOUT = 3005
 PORTIN = 3006
 
@@ -14,7 +15,7 @@ class Puredata(threading.Thread):
 		try:
 			# os.system('cd %s && ./pd -nogui' %(PDDIR))
 			# -nogui -path <path> -audiobuf <n> -nostdpath  -send \"pd dsp 1;pd dsp 0;\"
-			os.system('cd %s && ./pd -stderr -nostdpath -rt %s/pd-socket.pd' %(PDDIR, FILEDIR))
+			os.system('cd %s && ./pd -stderr -nostdpath -rt %s/%s' %(PDDIR, FILEDIR, FILE))
 			wait()
 		except:
 			print 'couldn\'t load Pd'

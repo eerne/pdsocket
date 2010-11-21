@@ -12,16 +12,25 @@ How to use
 
 ### Messages
 
-	pd.send('Hellp Pd!;')
+	pd.send('Hello Pd!;')
 
-Todo
-----
+
+### Todo
 
  * listening (buggy)
  * close app
 
- 
+
 Author(s)
 ---------
 
  * Enrique Erne
+
+
+### Related Projects
+
+ * [github.com/automata/topd](https://github.com/automata/topd/), [automata.cc/wiki/Main/ToPD](http://automata.cc/wiki/Main/ToPD)
+
+ * [code.google.com/p/pyata](http://code.google.com/p/pyata/)
+
+ * [mccormick.cx/projects/PyPd](http://mccormick.cx/projects/PyPd/)
