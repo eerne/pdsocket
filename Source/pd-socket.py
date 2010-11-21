@@ -5,8 +5,8 @@ import socket, threading, time, os
 
 PDDIR = '//Applications/Pd-0.42-5.app/Contents/Resources/bin'
 # assuming we are in the same dir as pd-socket.py and pd-socket.pd
-FILEDIR = '../Resources/puredata/pd-socket/Source/' # os.getcwd()
-FILE = 'pd-socket.pd'
+FILEDIR = os.getcwd()
+FILE = '/../Resources/puredata/pd-socket/Source/pd-socket.pd'
 PORTOUT = 3005
 PORTIN = 3006
 
