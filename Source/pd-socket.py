@@ -6,7 +6,7 @@ import socket, threading, time, os
 PDDIR = '//Applications/Pd-0.42-5.app/Contents/Resources/bin'
 # assuming we are in the same dir as pd-socket.py and pd-socket.pd
 FILEDIR = os.getcwd()
-FILE = '/../Resources/puredata/pd-socket/Source/pd-socket.pd'
+FILE = '/pd-socket.pd'
 PORTOUT = 3005
 PORTIN = 3006
 
@@ -20,9 +20,9 @@ class Puredata(threading.Thread):
 		except:
 			print 'couldn\'t load Pd'
 		finally:
-			print 'Pd bye bye'
+			print 'bye bye Pd'
 
-Puredata().start();
+Puredata().start()
 
 while 1:
 	time.sleep(0.25)
@@ -37,7 +37,7 @@ while 1:
 
 pd.send('python->pd Hello Pd;')
 
-"""
+
 class Listener(threading.Thread):
 	def run(self):
 		r = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -53,5 +53,4 @@ class Listener(threading.Thread):
 				print "python:" , data
 		r.close()
 
-Listener().start();
-"""
+Listener().start()
