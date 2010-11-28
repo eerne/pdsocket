@@ -1,24 +1,29 @@
 Pd-Socket
 =========
 
-Opens vanilla Pd and connects on a socket with [netreceive].
+Python class for opening Puredata and connecting on a socket with [netreceive].
 
 Read more about Puredata aka Pd on [crca.ucsd.edu/~msp/software.html](http://crca.ucsd.edu/~msp/software.html)
 
 How to use
 ----------
-
+	
+	cd Pd-Socket/Source/
 	python pd-socket.py
 
 ### Messages
 
-	pd.send('Hello Pd!;')
+Messages sent to Pd have to end with `;\n`
+
+	pd.send('Hello Pd!;\n')
+	pd.send('some more...;\n...messages at once;\n')
 
 
 ### Todo
 
- * listening (buggy)
- * close app
+ * test on win and linux
+ * listening
+ * close Pd
 
 
 Author(s)
