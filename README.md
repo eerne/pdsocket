@@ -13,7 +13,7 @@ How to use
 
 ### Messages
 
-Messages sent to Pd have to end with `;\n`
+The networking protocol sent to Pd is [FUDI](http://en.wikipedia.org/wiki/FUDI) and messages need to end with `;\n`
 
 	pd.send('Hello Pd!;\n')
 	pd.send('some more...;\n...messages at once;\n')
@@ -22,7 +22,6 @@ Messages sent to Pd have to end with `;\n`
 ### Todo
 
  * test on win and linux
- * listening
  * close Pd
 
 
@@ -35,7 +34,5 @@ Author(s)
 ### Related Projects
 
  * [github.com/automata/topd](https://github.com/automata/topd/), [automata.cc/wiki/Main/ToPD](http://automata.cc/wiki/Main/ToPD)
-
  * [code.google.com/p/pyata](http://code.google.com/p/pyata/)
-
  * [mccormick.cx/projects/PyPd](http://mccormick.cx/projects/PyPd/)
