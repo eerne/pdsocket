@@ -3,7 +3,7 @@
 
 name: Pd-Socket
 
-version: 0.2.0
+version: 0.2.0-wip
 
 authors:
 - Enrique Erne
@@ -50,23 +50,27 @@ class AsyncSocket(threading.Thread):
 	
 		class Listen(asyncore.dispatcher_with_send):
 
-			def handle_read(self):
-				data = self.recv(8192)
+			def handle_read(that):
+				data = that.recv(8192)
 				#self.send(data)
 				print data
 
+			def handle_close(that):
+				that.close()
+				exit()
+
 		class Open(asyncore.dispatcher):
 
-			def __init__(self, host, port):
-				asyncore.dispatcher.__init__(self)
-				self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
-				self.set_reuse_addr()
-				self.bind((host, port))
-				self.listen(1)
+			def __init__(that, host, port):
+				asyncore.dispatcher.__init__(that)
+				that.create_socket(socket.AF_INET, socket.SOCK_STREAM)
+				that.set_reuse_addr()
+				that.bind((host, port))
+				that.listen(1)
 				print 'do something'
 
-			def handle_accept(self):
-				pair = self.accept()
+			def handle_accept(that):
+				pair = that.accept()
 				if pair is None:
 					pass
 				else:
@@ -77,13 +81,15 @@ class AsyncSocket(threading.Thread):
 		self.listen = Open('localhost', 8080)
 		
 	def run(self):
-		asyncore.loop()
+		self.loop = asyncore.loop()
+		
 		
 def init(PORTOUT = 3005):
 	
-	receive = AsyncSocket()
-	receive.prepare()
-	receive.start()
+	r = AsyncSocket()
+	r.prepare()
+	r.start()
+	# exit()
 	
 	pd = Puredata()
 	pd.prepare(dir = os.getcwd())
