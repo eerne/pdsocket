@@ -13,7 +13,7 @@ license: MIT license
 ...
 """
 
-import asyncore, os, socket, sys, threading
+import asyncore, os, socket, sys, threading, time
 
 class Puredata(threading.Thread):
 
@@ -58,7 +58,18 @@ class AsyncSocket(threading.Thread):
 			def handle_close(that):
 				that.close()
 				exit()
-
+		
+		class Connect():
+			
+			def __init__(that):
+				try:
+					self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+					self.socket.connect(('localhost', 3005))
+				except socket.error, (value, message):
+					if self.socket:
+						self.socket.close()
+		
+		
 		class Open(asyncore.dispatcher):
 
 			def __init__(that, host, port):
@@ -76,39 +87,33 @@ class AsyncSocket(threading.Thread):
 				else:
 					sock, addr = pair
 					print 'Incoming connection from %s' % repr(addr)
+					Connect()
 					Listen(sock)
 		
-		self.listen = Open('localhost', 8080)
+		Open('localhost', 8080)
 		
 	def run(self):
 		self.loop = asyncore.loop()
+	
+	def send(self, data = ''):
+		self.socket.send(data + ';\n')
 		
-		
-def init(PORTOUT = 3005):
+def init():
 	
 	r = AsyncSocket()
 	r.prepare()
 	r.start()
-	# exit()
 	
 	pd = Puredata()
 	pd.prepare(dir = os.getcwd())
 	pd.start()
 	print 'done'
 	
-"""
-	while 1:
-		try:
-			pd.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			pd.socket.connect(('localhost', PORTOUT))
-			break
-		except socket.error, (value, message):
-			if pd.socket:
-				pd.socket.close()
+	time.sleep(6)
+	r.send('python->pd Hello Pd!')
+	r.send('some more...;\n...messages at once')
 	
-	pd.socket.send('python->pd Hello Pd!;\n')
-	pd.socket.send('some more...;\n...messages at once;\n')
-"""
+
 if __name__ == '__main__':
 	init()
 
