@@ -1,4 +1,4 @@
-#N canvas 108 279 620 381 10;
+#N canvas 57 292 620 381 10;
 #X floatatom 165 65 5 0 0 0 - - -;
 #X obj 49 165 loadbang;
 #X msg 49 225 \; pd dsp 1 \; pd dsp 0;
@@ -7,7 +7,18 @@
 mode;
 #X obj 49 35 netreceive 3005 0;
 #X obj 49 75 print Pd;
+#X obj 273 111 netsend;
+#X floatatom 273 141 5 0 0 0 - - -;
+#X obj 273 51 loadbang;
+#X msg 273 81 connect localhost 8080;
+#X msg 354 120 disconnect;
+#X msg 478 83 send foo bar;
 #X connect 1 0 3 0;
 #X connect 3 0 2 0;
 #X connect 5 0 6 0;
 #X connect 5 1 0 0;
+#X connect 7 0 8 0;
+#X connect 9 0 10 0;
+#X connect 10 0 7 0;
+#X connect 11 0 7 0;
+#X connect 12 0 7 0;
