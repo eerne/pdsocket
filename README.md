@@ -21,7 +21,7 @@ The networking protocol sent to Pd is [FUDI](http://en.wikipedia.org/wiki/FUDI) 
 
 ### Todo
 
- * test on win and linux
+ * test on win
  * close Pd
 
 

@@ -30,14 +30,15 @@ class Puredata(threading.Thread):
 			if sys.platform == 'linux2':
 				self.pd = 'pd'
 			elif sys.platform == 'darwin':
-				self.pd = '//Applications/Pd-0.42-5.app/Contents/Resources/bin'
+				self.pd = '//Applications/Pd-0.42-5.app/Contents/Resources/bin/pd'
 			elif sys.platform == 'win32':
-				self.pd = 'pd\\bin\\pd.exe'
+				#self.pd = 'pd\\bin\\pd.exe'
+				self.pd = '%programfiles%\pd\bin\pd.exe'
 		return self
 		
 	def run(self):
 		try:
-			os.system('cd %s && ./pd %s %s/%s' %(self.pd, self.args, self.dir, self.file))
+			os.system('%s %s %s/%s' %(self.pd, self.args, self.dir, self.file))
 		except:
 			print 'couldn\'t load Pd'
 		finally:
