@@ -42,12 +42,12 @@ class Puredata(threading.Thread):
 		except:
 			print 'couldn\'t load Pd'
 		finally:
-			print 'bye bye Pd'
+			print 'Puredata quit'
 
 
 class AsyncSocket(threading.Thread):
 	
-	def prepare(self):
+	def prepare(self, host = 'localhost', sendPort = 4025, receivePort = 4026):
 	
 		class Listen(asyncore.dispatcher_with_send):
 
@@ -65,7 +65,8 @@ class AsyncSocket(threading.Thread):
 			def __init__(that):
 				try:
 					self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-					self.socket.connect(('localhost', 3005))
+					self.socket.connect((host, sendPort))
+					print 'connecting to port %s' % str(sendPort)
 				except socket.error, (value, message):
 					if self.socket:
 						self.socket.close()
@@ -73,13 +74,13 @@ class AsyncSocket(threading.Thread):
 		
 		class Open(asyncore.dispatcher):
 
-			def __init__(that, host, port):
+			def __init__(that):
 				asyncore.dispatcher.__init__(that)
 				that.create_socket(socket.AF_INET, socket.SOCK_STREAM)
 				that.set_reuse_addr()
-				that.bind((host, port))
+				that.bind((host, receivePort))
 				that.listen(1)
-				print 'do something'
+				print 'open socket on %s' % str(receivePort)
 
 			def handle_accept(that):
 				pair = that.accept()
@@ -87,11 +88,11 @@ class AsyncSocket(threading.Thread):
 					pass
 				else:
 					sock, addr = pair
-					print 'Incoming connection from %s' % repr(addr)
+					print 'incoming connection from %s' % repr(addr)
 					Connect()
 					Listen(sock)
 		
-		Open('localhost', 8080)
+		Open()
 		
 	def run(self):
 		self.loop = asyncore.loop()
@@ -108,10 +109,9 @@ def init():
 	pd = Puredata()
 	pd.prepare(dir = os.getcwd())
 	pd.start()
-	print 'done'
 	
 	time.sleep(6)
-	r.send('python->pd Hello Pd!')
+	r.send('Hello Pd!')
 	r.send('some more...;\n...messages at once')
 	
 
