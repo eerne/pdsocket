@@ -3,7 +3,7 @@
 
 name: Pd-Socket
 
-version: 0.2.0-wip
+version: 0.2.0
 
 authors:
 - Enrique Erne
@@ -13,7 +13,7 @@ license: MIT license
 ...
 """
 
-import asyncore, os, socket, sys, threading, time
+import asyncore, os, socket, sys, threading
 
 class Puredata(threading.Thread):
 
@@ -46,6 +46,12 @@ class Puredata(threading.Thread):
 
 
 class AsyncSocket(threading.Thread):
+
+	@staticmethod
+	def onReceive(self, data): pass
+		
+	def addEvent(self, event, callback):
+		setattr(self, 'on' + event.capitalize(), callback)
 	
 	def prepare(self, host = 'localhost', sendPort = 4025, receivePort = 4026):
 	
@@ -53,8 +59,8 @@ class AsyncSocket(threading.Thread):
 
 			def handle_read(that):
 				data = that.recv(8192)
-				#self.send(data)
-				print data
+				#if hasattr(self, 'onReceive'):
+				self.onReceive(self, data)
 
 			def handle_close(that):
 				that.close()
@@ -106,13 +112,19 @@ def init():
 	r.prepare()
 	r.start()
 	
+	def log(self, data):
+		print 'Receive: ' + data
+	
+	r.onReceive = log
+	#r.addEvent('receive', log)
+	
 	pd = Puredata()
 	pd.prepare(dir = os.getcwd())
 	pd.start()
 	
-	time.sleep(6)
-	r.send('Hello Pd!')
-	r.send('some more...;\n...messages at once')
+	#time.sleep(6)
+	#r.send('Hello Pd!')
+	#r.send('some more...;\n...messages at once')
 	
 
 if __name__ == '__main__':
