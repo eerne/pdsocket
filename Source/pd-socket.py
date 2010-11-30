@@ -46,6 +46,9 @@ class Puredata(threading.Thread):
 
 
 class AsyncSocket(threading.Thread):
+	
+	@staticmethod
+	def onReady(self): pass
 
 	@staticmethod
 	def onReceive(self, data): pass
@@ -97,6 +100,7 @@ class AsyncSocket(threading.Thread):
 					print 'incoming connection from %s' % repr(addr)
 					Connect()
 					Listen(sock)
+					self.onReady(self)
 		
 		Open()
 		
@@ -105,12 +109,20 @@ class AsyncSocket(threading.Thread):
 	
 	def send(self, data = ''):
 		self.socket.send(data + ';\n')
-		
+
+
 def init():
 	
 	r = AsyncSocket()
 	r.prepare()
 	r.start()
+	
+	def hello(self):
+		self.send('Hello Pd!')
+		self.send('some more...;\n...messages at once')
+	
+	#r.onReady = hello
+	r.addEvent('ready', hello)
 	
 	def log(self, data):
 		print 'Receive: ' + data
@@ -122,9 +134,6 @@ def init():
 	pd.prepare(dir = os.getcwd())
 	pd.start()
 	
-	#time.sleep(6)
-	#r.send('Hello Pd!')
-	#r.send('some more...;\n...messages at once')
 	
 
 if __name__ == '__main__':
