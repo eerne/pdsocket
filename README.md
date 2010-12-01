@@ -23,6 +23,7 @@ The networking protocol sent to Pd is [FUDI](http://en.wikipedia.org/wiki/FUDI) 
 
  * test on win
  * close Pd
+ * Pd-0.43 compatibility
 
 
 Author(s)

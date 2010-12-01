@@ -31,6 +31,7 @@ class Puredata(threading.Thread):
 				self.pd = 'pd'
 			elif sys.platform == 'darwin':
 				self.pd = '//Applications/Pd-0.42-5.app/Contents/Resources/bin/pd'
+				#self.pd = '//Applications/Pd-0.43-0test3.app/Contents/Resources/bin/pd'
 			elif sys.platform == 'win32':
 				#self.pd = 'pd\\bin\\pd.exe'
 				self.pd = '%programfiles%\pd\bin\pd.exe'
@@ -112,6 +113,8 @@ class AsyncSocket(threading.Thread):
 			self.socket.send(data + ';\n')
 		elif isinstance(data, (list, tuple)):
 			self.socket.send(';\n'.join(data) + ';\n')
+		else
+			print  isinstance(data)
 			
 
 
@@ -122,7 +125,7 @@ def init():
 	r.start()
 	
 	def hello(self):
-		self.send('Hello Pd!')
+		self.send('symbol Hello\ Pd!')
 		self.send('some more...;\n...messages at once')
 		self.send(['list items', 'work', 'as well'])
 		self.send(('tuple', 'too'))
