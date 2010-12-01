@@ -108,7 +108,11 @@ class AsyncSocket(threading.Thread):
 		self.loop = asyncore.loop()
 	
 	def send(self, data = ''):
-		self.socket.send(data + ';\n')
+		if isinstance(data, basestring):
+			self.socket.send(data + ';\n')
+		elif isinstance(data, (list, tuple)):
+			self.socket.send(';\n'.join(data) + ';\n')
+			
 
 
 def init():
@@ -120,6 +124,8 @@ def init():
 	def hello(self):
 		self.send('Hello Pd!')
 		self.send('some more...;\n...messages at once')
+		self.send(['list items', 'work', 'as well'])
+		self.send(('tuple', 'too'))
 	
 	#r.onReady = hello
 	r.addEvent('ready', hello)
