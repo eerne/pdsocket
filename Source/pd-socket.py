@@ -113,7 +113,7 @@ class AsyncSocket(threading.Thread):
 			self.socket.send(data + ';\n')
 		elif isinstance(data, (list, tuple)):
 			self.socket.send(';\n'.join(data) + ';\n')
-		else
+		else:
 			print  isinstance(data)
 			
 
@@ -129,6 +129,7 @@ def init():
 		self.send('some more...;\n...messages at once')
 		self.send(['list items', 'work', 'as well'])
 		self.send(('tuple', 'too'))
+		self.send({'key': 'value'})
 	
 	#r.onReady = hello
 	r.addEvent('ready', hello)
