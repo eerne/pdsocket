@@ -113,8 +113,10 @@ class AsyncSocket(threading.Thread):
 			self.socket.send(data + ';\n')
 		elif isinstance(data, (list, tuple)):
 			self.socket.send(';\n'.join(data) + ';\n')
+		elif isinstance(data, dict):
+			self.socket.send(';\n'.join('%s %s' % (k, v) for k, v in data.items()) + ';\n')
 		else:
-			print  isinstance(data)
+			print 'data type not supported (yet)'
 			
 
 
@@ -129,7 +131,7 @@ def init():
 		self.send('some more...;\n...messages at once')
 		self.send(['list items', 'work', 'as well'])
 		self.send(('tuple', 'too'))
-		self.send({'key': 'value'})
+		self.send({'key': 'value', 'more': 3})
 	
 	#r.onReady = hello
 	r.addEvent('ready', hello)
