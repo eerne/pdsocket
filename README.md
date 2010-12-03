@@ -26,6 +26,7 @@ The networking protocol sent to Pd is [FUDI](http://en.wikipedia.org/wiki/FUDI) 
  * Pd-0.43 compatibility
  * write test
  * build as package
+ * properly parse ;\n on receiving messages from Pd
 
 
 Author(s)
