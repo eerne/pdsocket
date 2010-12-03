@@ -26,15 +26,12 @@ class Puredata(threading.Thread):
 		self.args = args
 		if pd != None:
 			self.pd = pd
-		else:
-			if sys.platform == 'linux2':
-				self.pd = 'pd'
-			elif sys.platform == 'darwin':
-				self.pd = '//Applications/Pd-0.42-5.app/Contents/Resources/bin/pd'
-				#self.pd = '//Applications/Pd-0.43-0test3.app/Contents/Resources/bin/pd'
-			elif sys.platform == 'win32':
-				#self.pd = 'pd\\bin\\pd.exe'
-				self.pd = '%programfiles%\pd\bin\pd.exe'
+		elif sys.platform == 'linux2':
+			self.pd = 'pd'
+		elif sys.platform == 'darwin':
+			self.pd = '//Applications/Pd-0.42-5.app/Contents/Resources/bin/pd'
+		elif sys.platform == 'win32':
+			self.pd = '%programfiles%\pd\bin\pd.exe'
 		return self
 		
 	def run(self):
@@ -58,20 +55,8 @@ class AsyncSocket(threading.Thread):
 		setattr(self, 'on' + event.capitalize(), callback)
 	
 	def prepare(self, host = 'localhost', sendPort = 4025, receivePort = 4026):
-	
-		class Listen(asyncore.dispatcher_with_send):
-
-			def handle_read(that):
-				data = that.recv(8192)
-				#if hasattr(self, 'onReceive'):
-				self.onReceive(self, data)
-
-			def handle_close(that):
-				that.close()
-				exit()
 		
 		class Connect():
-			
 			def __init__(that):
 				try:
 					self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -80,10 +65,16 @@ class AsyncSocket(threading.Thread):
 				except socket.error, (value, message):
 					if self.socket:
 						self.socket.close()
-		
+	
+		class Listen(asyncore.dispatcher_with_send):
+			def handle_read(that):
+				data = that.recv(8192)
+				self.onReceive(self, data)
+			def handle_close(that):
+				that.close()
+				exit()
 		
 		class Open(asyncore.dispatcher):
-
 			def __init__(that):
 				asyncore.dispatcher.__init__(that)
 				that.create_socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -91,7 +82,6 @@ class AsyncSocket(threading.Thread):
 				that.bind((host, receivePort))
 				that.listen(1)
 				print 'open socket on %s' % str(receivePort)
-
 			def handle_accept(that):
 				pair = that.accept()
 				if pair is None:
@@ -106,7 +96,7 @@ class AsyncSocket(threading.Thread):
 		Open()
 		
 	def run(self):
-		self.loop = asyncore.loop()
+		asyncore.loop()
 	
 	def send(self, data = ''):
 		if isinstance(data, basestring):
@@ -117,7 +107,6 @@ class AsyncSocket(threading.Thread):
 			self.socket.send(';\n'.join('%s %s' % (k, v) for k, v in data.items()) + ';\n')
 		else:
 			print 'data type not supported (yet)'
-			
 
 
 def init():
@@ -133,19 +122,18 @@ def init():
 		self.send(('tuple', 'too'))
 		self.send({'key': 'value', 'more': 3})
 	
-	#r.onReady = hello
-	r.addEvent('ready', hello)
+	r.onReady = hello
+	#r.addEvent('ready', hello)
 	
 	def log(self, data):
 		print 'Receive: ' + data
 	
-	r.onReceive = log
-	#r.addEvent('receive', log)
+	#r.onReceive = log
+	r.addEvent('receive', log)
 	
 	pd = Puredata()
 	pd.prepare(dir = os.getcwd())
 	pd.start()
-	
 	
 
 if __name__ == '__main__':

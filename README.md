@@ -22,8 +22,10 @@ The networking protocol sent to Pd is [FUDI](http://en.wikipedia.org/wiki/FUDI) 
 ### Todo
 
  * test on win
- * close Pd
+ * close method for Pd-Socket
  * Pd-0.43 compatibility
+ * write test
+ * build as package
 
 
 Author(s)
