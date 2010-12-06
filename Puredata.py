@@ -17,10 +17,9 @@ import os, sys, threading
 
 class Puredata(threading.Thread):
 
-	def prepare(self, pd = None, dir = './', file = 'pd-socket.pd', args = '-stderr -nostdpath -rt -send \"pd dsp 1;pd dsp 0;\"'):
+	def prepare(self, pd = None, dir = '', file = '', args = '-stderr -nostdpath -rt -send \"pd dsp 1;pd dsp 0;\"'):
 		self.pd = pd
-		self.dir = dir
-		self.file = file
+		self.file = dir + file
 		# args = -stderr -nostdpath -rt -nogui -path <path> -audiobuf <n> -nostdpath -nogui -send \"pd dsp 1;pd dsp 0;\"
 		# note in -nogui you can't use -send
 		self.args = args
@@ -36,7 +35,7 @@ class Puredata(threading.Thread):
 		
 	def run(self):
 		try:
-			os.system('%s %s %s/%s' %(self.pd, self.args, self.dir, self.file))
+			os.system('%s %s %s' %(self.pd, self.args, self.file))
 		except:
 			print 'couldn\'t load Pd'
 		finally:

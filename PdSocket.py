@@ -103,7 +103,7 @@ def init():
 	#r.onReceive = log
 	r.addEvent('receive', log)
 	
-	print 'waiting for pdsocket.pd'
+	print 'awaiting for pysocket-help.pd'
 
 if __name__ == '__main__':
 	init()

@@ -24,6 +24,6 @@ def log(self, data):
 r.addEvent('receive', log)
 
 pd = Puredata()
-pd.prepare(dir = os.getcwd())
+pd.prepare(dir = os.getcwd() + '/', file = 'pysocket-help.pd')
 pd.start()
 

@@ -1,0 +1,17 @@
+#N canvas 51 22 525 540 10;
+#X obj 53 250 print Pd;
+#X msg 182 170 disconnect;
+#X msg 103 130 send foo bar;
+#X obj 53 50 loadbang;
+#X msg 53 90 connect localhost 4026;
+#X obj 53 210 pysocket 4025;
+#X msg 53 430 \; pd dsp 1 \; pd dsp 0;
+#X obj 53 390 del 0;
+#X obj 53 350 loadbang;
+#X connect 1 0 5 0;
+#X connect 2 0 5 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 0;
+#X connect 7 0 6 0;
+#X connect 8 0 7 0;

@@ -1,4 +1,4 @@
-Pd-Socket
+PdSocket
 =========
 
 Python class for opening Puredata and connecting on a socket with [netreceive].
@@ -8,8 +8,8 @@ Read more about Puredata aka Pd on [crca.ucsd.edu/~msp/software.html](http://crc
 How to use
 ----------
 	
-	cd Pd-Socket/Source/
-	python pd-socket.py
+	cd pdsocket/
+	python test.py
 
 ### Messages
 
@@ -40,3 +40,4 @@ Author(s)
  * [github.com/automata/topd](https://github.com/automata/topd/), [automata.cc/wiki/Main/ToPD](http://automata.cc/wiki/Main/ToPD)
  * [code.google.com/p/pyata](http://code.google.com/p/pyata/)
  * [mccormick.cx/projects/PyPd](http://mccormick.cx/projects/PyPd/)
+
