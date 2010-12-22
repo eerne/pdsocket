@@ -1,6 +1,4 @@
 """
----
-
 name: PdSocket
 
 version: 0.4.0-wip
@@ -10,7 +8,6 @@ authors:
 
 license: MIT license
 
-...
 """
 
 import asyncore, socket, threading
@@ -103,7 +100,7 @@ def init():
 	#r.onReceive = log
 	r.addEvent('receive', log)
 	
-	print 'awaiting for pysocket-help.pd'
+	print 'waiting for pysocket-help.pd'
 
 if __name__ == '__main__':
 	init()

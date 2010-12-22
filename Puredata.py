@@ -1,6 +1,4 @@
 """
----
-
 name: Puredata
 
 version: 0.4.0-wip
@@ -10,8 +8,8 @@ authors:
 
 license: MIT license
 
-...
 """
+
 from os import system, getcwd
 import os, sys, threading
 
@@ -35,21 +33,17 @@ class Puredata(threading.Thread):
 		
 	def run(self):
 		try:
-			os.system('%s %s %s' %(self.pd, self.args, self.file))
+			pdInit = '%s %s' % (self.pd, self.args)
+			if (self.file != ''):
+				pdInit += ' ' + self.file
+			os.system(pdInit)
 		except:
 			print 'couldn\'t load Pd'
 		finally:
 			print 'Puredata quit'
 
-
-
-def init():
-	
-	pd = Puredata()
-	pd.prepare(dir = os.getcwd())
-	pd.start()
-	
-
 if __name__ == '__main__':
-	init()
+	pd = Puredata()
+	pd.prepare()
+	pd.start()
 

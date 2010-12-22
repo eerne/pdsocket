@@ -1,7 +1,13 @@
-#N canvas 650 22 368 346 10;
-#X obj 55 90 netsend;
-#X obj 55 190 outlet;
+#N canvas 326 101 439 394 10;
+#X obj 55 190 netsend;
+#X obj 55 290 outlet;
 #X obj 55 50 inlet;
-#X obj 55 150 netreceive \$1 0;
+#X obj 55 250 netreceive \$1 0;
+#X obj 155 50 loadbang;
+#X obj 155 90 f \$2;
+#X msg 155 130 connect localhost \$1;
 #X connect 2 0 0 0;
 #X connect 3 0 1 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 0 0 0;
